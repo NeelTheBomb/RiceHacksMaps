@@ -32,7 +32,7 @@ def walking_distance_time(coord_1, coord_2):
         "origins": f"{origin_lat},{origin_lon}",
         "destinations": f"{dest_lat},{dest_lon}",
         "mode": "walking",
-        "units": "metric",  # or "imperial"
+        "units": "imperial",  # or "imperial"
         "key": API_KEY
     }
     
@@ -44,21 +44,21 @@ def walking_distance_time(coord_1, coord_2):
         if element["status"] == "OK":
             distance_text = element["distance"]["text"]
             distance_value = element["distance"]["value"]  # in meters
-            duration_text = element["duration"]["text"]
+            duration_text = element["duration"]["text"] # e.g., "1 hour 5 mins"
             duration_value = element["duration"]["value"]  # in seconds
             
             return {
                 "Distance": distance_text,
-                "distance_meters": distance_value,
-                "duration_text": duration_text,
-                "duration_seconds": duration_value
+                "Distance (m)": distance_value,
+                "Duration (hours)": duration_text,
+                "Duration (seconds)": duration_value
             }
         else:
             return {"error": element["status"]}
     except Exception as e:
         return {"error": str(e)}
 
-# Example usage:
+
 result = walking_distance_time(get_gps_coordinates(), (29.60078, -95.61840))  
 print(result)
 
